@@ -37,6 +37,7 @@ function logout() {
 async function fetchProductList() {
     let response = await fetch({
         url: "http://localhost:3000/products", headers: {
+            'Content-type': 'application/json',
             "Authorization": getJWT()
         },
     })

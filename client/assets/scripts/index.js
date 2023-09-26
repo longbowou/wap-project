@@ -41,6 +41,8 @@ async function fetchProductList() {
             "Authorization": getJWT()
         },
     })
+
+    productList = response
 }
 
 function UpdateProductListUI() {

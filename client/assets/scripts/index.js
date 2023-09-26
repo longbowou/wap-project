@@ -21,8 +21,25 @@ var productList = [
     }
 ]
 
+function saveJWT(jwt) {
+    sessionStorage.setItem("JWT", jwt)
+}
+
+function getJWT(jwt) {
+    return sessionStorage.getItem("JWT")
+}
+
+function logout() {
+    sessionStorage.clear()
+    window.location = "/login.html"
+}
+
 async function fetchProductList() {
-    var response = await fetch("http://localhost:3000/products")
+    let response = await fetch({
+        url: "http://localhost:3000/products", headers: {
+            "Authorization": getJWT()
+        },
+    })
 }
 
 function UpdateProductListUI() {

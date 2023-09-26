@@ -1,6 +1,6 @@
 window.onload = function () {
 
-    document.getElementById('submit').onclick = async function () {
+    document.getElementById('logout').onclick = async function () {
         const response = await fetch('http://localhost:3000/login', {
             method: 'POST',
             body: JSON.stringify({

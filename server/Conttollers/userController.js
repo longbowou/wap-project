@@ -2,23 +2,39 @@ const userModel = require("../Model/users");
 const moment = require('moment'); // require
 
 let usersList = [{id: 1, username: 'test1', password: 'pwd'}, {id: 2, username: 'test2', password: 'pwd'}];
+let generatedString=[];
+
 
 exports.login = (req, res, next) => {
-    const user = usersList.find(user => {
-        if((user.id == req.body.id && user.password == req.body.password) || (user.username == req.body.id && user.password == req.body.password)){
-            return user;
+    console.log("req: ", req.body)
+    let user = usersList.find(user => {
+
+        if((user.id == req.body.username && user.password == req.body.password) || (user.username == req.body.username && user.password == req.body.password)){
+            return true;
         }
     })
+
     if (user){
+        const newUser = {...user}
         const datetime = moment().format();
-        user.dateTime = datetime;
-        res.status(200).json(user);
+        delete newUser.password;
+
+        newUser.dateTime = datetime;
+        newUser.jwt = jwt();
+        generatedString.push(newUser.jwt)
+        res.status(200).json(newUser);
 
     }
     else {
         res.status(401).json({ message: "Invalid user credential!"});
     }
 
+}
+
+
+const jwt = function (){
+    let r = (Math.random() + 1).toString(36).substring(7);
+    return r
 }
 
 

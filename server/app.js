@@ -7,6 +7,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+const cors = require('cors');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -14,6 +15,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cors({ origin: '*' }));
 app.use('/', usersRouter);
 
 app.use((err, req, res,next)=>{

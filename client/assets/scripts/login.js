@@ -1,7 +1,5 @@
-window.onload = function () {
-
-    document.getElementById('logout').onclick = async function () {
-        const response = await fetch('http://localhost:3000/login', {
+async function login() {
+        const response = await fetch('http://localhost:3000', {
             method: 'POST',
             body: JSON.stringify({
                 username: document.getElementById('username').value,
@@ -11,15 +9,13 @@ window.onload = function () {
                 'Content-type': 'application/json'
             }
         });
-        const data = await response.json();
-
-        if (data.error) {
-            document.getElementById('err').innerHTML = data.error;
+        // const data = await response;
+        if (response.status !==200) {
+            console.log( (await response.json()).message)
+            document.getElementById('err').innerText = (await response.json()).message;
         } else {
-            sessionStorage.setItem('accessToken', JSON.stringify(data));
-            location.href = '../../index.html'
+            sessionStorage.setItem('user', JSON.stringify( await response.json()));
+            window.location.href= 'index.html'
         }
 
     }
-
-}

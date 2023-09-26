@@ -1,0 +1,54 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+
+#header-center {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+}
+
+#submit {
+    width: 90px;
+    height: 40px;
+}
+
+table, td, th {
+    border: 1px solid;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+#place-order-div {
+    align-self: flex-end;
+}
+
+#place-order-div {
+    text-align: right;
+}
+
+#total {
+    text-align: right;
+}
+
+#place-order {
+    width: 150px;
+    height: 40px;
+    margin-top: 10px;
+}
+
+#shopping-cart {
+    display: none;
+}

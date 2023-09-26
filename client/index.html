@@ -2,9 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <style>
+
+    </style>
 </head>
 <body>
+<div id="header">
+    <div>
+        <h1>Logo</h1>
+    </div>
 
+    <div id="header-center">
+        <h3>Welcome, <span>Daniel</span></h3>
+    </div>
+
+    <div>
+        <button id="submit">Logout</button>
+    </div>
+</div>
+
+<hr>
+
+<h4>Product List</h4>
+<table>
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Price</td>
+        <td>Sock</td>
+        <td>Actions</td>
+    </tr>
+    </thead>
+    <tbody id="product-list-tbody">
+    </tbody>
+</table>
+
+<h4>Your Shopping Cart</h4>
+<h5 id="empty-shopping-cart">There is no items in your shopping cart !</h5>
+
+<div id="shopping-cart">
+    <table>
+        <thead>
+        <tr>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Total</td>
+            <td>Quantity</td>
+        </tr>
+        </thead>
+        <tbody id="shopping-cart-tbody">
+        </tbody>
+    </table>
+
+    <div id="place-order-div">
+        <button id="place-order">Place order</button>
+    </div>
+</div>
+
+<script src="assets/scripts/index.js" type="text/javascript"></script>
 </body>
 </html>

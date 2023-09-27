@@ -1,9 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const  express = require('express');
+const options = {
+    "caseSensitive": false,
+    "strict": false
+};
+const router = express.Router();
+const userController = require("../Conttollers/productsController")
+/* GET users listing. */
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('index', {title: 'Express'});
-});
-
+router.get("/", userController.getProduct);
 module.exports = router;

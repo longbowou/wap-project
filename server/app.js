@@ -15,9 +15,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors({ origin: '*' }));
+app.use(cors());
 app.use('/', usersRouter);
 
+app.use('/products', indexRouter);
 app.use((err, req, res,next)=>{
     res.status(500).json({error:err.message})
 })

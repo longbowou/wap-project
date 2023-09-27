@@ -9,13 +9,11 @@ async function login() {
                 'Content-type': 'application/json'
             }
         });
-        // const data = await response;
         if (response.status !==200) {
-            console.log( (await response.json()).message)
-            document.getElementById('err').innerText = (await response.json()).message;
+           document.getElementById('err').textContent = (await response.json()).message;
         } else {
             sessionStorage.setItem('user', JSON.stringify( await response.json()));
-            window.location.href= 'index.html'
+            window.location.href= './index.html'
         }
 
     }

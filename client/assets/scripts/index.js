@@ -33,19 +33,21 @@ function logout() {
     sessionStorage.clear()
     window.location = "/login.html"
 }
-
+window.onload= fetchProductList();
 async function fetchProductList() {
-    productList = await fetch({
-        url: "http://localhost:3000/products", headers: {
+    const products = await fetch('http://localhost:3000/products', {
+        method: 'GET',
+        headers: {
             'Content-type': 'application/json',
-            "Authorization": getJWT()
-        },
-    })
+        }
+    });
+
+    updateProductListUI((await products.json()))
 }
 
-function UpdateProductListUI() {
+function updateProductListUI(products) {
     var tbody = ""
-    productList.forEach((item) => {
+    products.forEach((item) => {
         tbody += `
     <tr>
         <td>${item.name}</td>
@@ -60,7 +62,7 @@ function UpdateProductListUI() {
     document.getElementById('product-list-tbody').innerHTML = tbody
 }
 
-UpdateProductListUI()
+// updateProductListUI()
 
 function addToShoppingCart(id) {
     let item = productList.find((item) => item.id == id)

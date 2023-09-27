@@ -2,7 +2,7 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-#header {
+#header, form {
     display: flex;
     align-items: center;
     align-content: center;
@@ -25,4 +25,8 @@ body {
 #welcome {
     text-align: center;
     margin-top: 100px;
+}
+
+#err {
+    color: darkred;
 }

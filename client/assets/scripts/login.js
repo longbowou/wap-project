@@ -1,4 +1,9 @@
-async function login() {
+window.onload = function () {
+    document.getElementById('form').onsubmit = async function (ev) {
+        ev.preventDefault();
+
+        document.getElementById('err').textContent = "";
+
         const response = await fetch('http://localhost:3000', {
             method: 'POST',
             body: JSON.stringify({
@@ -9,11 +14,12 @@ async function login() {
                 'Content-type': 'application/json'
             }
         });
-        if (response.status !==200) {
-           document.getElementById('err').textContent = (await response.json()).message;
-        } else {
-            sessionStorage.setItem('user', JSON.stringify( await response.json()));
-            window.location.href= './index.html'
-        }
 
+        if (response.status === 200) {
+            sessionStorage.setItem('user', JSON.stringify(await response.json()));
+            window.location.href = './index.html'
+        } else {
+            document.getElementById('err').textContent = (await response.json()).message;
+        }
     }
+}

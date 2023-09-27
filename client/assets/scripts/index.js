@@ -1,53 +1,46 @@
-var shoppingCartTotal = 0;
-var shoppingCart = [];
-var productList = [
-    {
-        id: 1,
-        name: "Node.js",
-        price: 9.99,
-        stock: 8,
-    },
-    {
-        id: 2,
-        name: "React",
-        price: 19.99,
-        stock: 5,
-    },
-    {
-        id: 3,
-        name: "Angular",
-        price: 29.99,
-        stock: 13,
-    }
-]
+let shoppingCartTotal = 0;
+const shoppingCart = [];
+let productList = [];
 
-function saveJWT(jwt) {
-    sessionStorage.setItem("JWT", jwt)
-}
-
-function getJWT(jwt) {
-    return sessionStorage.getItem("JWT")
+function getUser() {
+    return JSON.parse(sessionStorage.getItem("user"))
 }
 
 function logout() {
     sessionStorage.clear()
-    window.location = "/login.html"
+    window.location.href = "./login.html"
 }
-window.onload= fetchProductList();
+
+window.onload = function () {
+    fetchProductList()
+    document.getElementById("username-span").textContent = getUser().username
+};
+
 async function fetchProductList() {
-    const products = await fetch('http://localhost:3000/products', {
+    const response = await fetch('http://localhost:3000/products', {
         method: 'GET',
         headers: {
             'Content-type': 'application/json',
+            'Authorization': getUser().jwt,
         }
     });
 
-    updateProductListUI((await products.json()))
+    switch (response.status) {
+        case 200:
+            productList = await response.json();
+            updateProductListUI()
+            break
+
+        case 401:
+            window.location.href = './index.html'
+            break
+    }
+
 }
 
-function updateProductListUI(products) {
-    var tbody = ""
-    products.forEach((item) => {
+function updateProductListUI() {
+    let tbody = "";
+    productList.forEach((item) => {
         tbody += `
     <tr>
         <td>${item.name}</td>
@@ -61,8 +54,6 @@ function updateProductListUI(products) {
 
     document.getElementById('product-list-tbody').innerHTML = tbody
 }
-
-// updateProductListUI()
 
 function addToShoppingCart(id) {
     let item = productList.find((item) => item.id == id)
@@ -92,10 +83,10 @@ function computeShoppingCartTotal() {
     shoppingCart.forEach((item) => shoppingCartTotal += item.price * item.quantity)
 }
 
-var shoppingCartDiv = document.getElementById('shopping-cart')
-var emptyLabel = document.getElementById('empty-shopping-cart')
+const shoppingCartDiv = document.getElementById('shopping-cart');
+const emptyLabel = document.getElementById('empty-shopping-cart');
 
-var shoppingCartTbody = document.getElementById('shopping-cart-tbody')
+const shoppingCartTbody = document.getElementById('shopping-cart-tbody');
 
 function updateShoppingCartUI() {
     computeShoppingCartTotal()

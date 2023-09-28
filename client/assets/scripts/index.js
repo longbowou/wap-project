@@ -1,9 +1,14 @@
 let shoppingCartTotal = 0;
-const shoppingCart = [];
+let shoppingCart = [];
 let productList = [];
 
 function getUser() {
-    return JSON.parse(sessionStorage.getItem("user"))
+    const user = sessionStorage.getItem("user")
+    if (user) {
+        return JSON.parse(user)
+    }
+
+    return null;
 }
 
 function logout() {
@@ -12,6 +17,9 @@ function logout() {
 }
 
 window.onload = function () {
+    if (getUser() === null) {
+        window.location.href = "./login.html"
+    }
     fetchProductList()
     document.getElementById("username-span").textContent = getUser().username
 };
@@ -35,7 +43,43 @@ async function fetchProductList() {
             window.location.href = './index.html'
             break
     }
+}
 
+const errorElement = document.getElementById('error');
+const successElement = document.getElementById('success-place-order');
+
+async function placeOrder() {
+    errorElement.style.display = "none";
+    successElement.style.display = "none";
+
+    const response = await fetch('http://localhost:3000/products', {
+        method: 'POST',
+        body: JSON.stringify(shoppingCart),
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': getUser().jwt,
+        }
+    });
+
+    switch (response.status) {
+        case 200:
+            successElement.style.display = "block";
+            productList = await response.json();
+            updateProductListUI()
+
+            shoppingCart = [];
+            updateShoppingCartUI();
+            break
+
+        case 404:
+            errorElement.textContent = (await response.json()).error
+            errorElement.style.display = "block";
+            break
+
+        case 401:
+            window.location.href = './index.html'
+            break
+    }
 }
 
 function updateProductListUI() {
@@ -57,8 +101,7 @@ function updateProductListUI() {
 
 function addToShoppingCart(id) {
     let item = productList.find((item) => item.id == id)
-    console.log(item)
-    if (item != null) {
+    if (item != null && item.stock > 0) {
         let shoppingCartItem = shoppingCart.find((item) => item.id == id)
         if (shoppingCartItem == null) {
             shoppingCart.push({
@@ -94,6 +137,7 @@ function updateShoppingCartUI() {
     if (shoppingCartTotal === 0) {
         shoppingCartDiv.style.display = "none";
         emptyLabel.style.display = "block";
+        errorElement.style.display = "none";
     } else {
         shoppingCartDiv.style.display = "block";
         emptyLabel.style.display = "none";

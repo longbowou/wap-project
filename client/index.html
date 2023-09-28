@@ -19,7 +19,7 @@
     </div>
 
     <div id="header-center">
-        <h3>Welcome, <span id="username-span">Daniel</span></h3>
+        <h3>Welcome, <span id="username-span"></span></h3>
     </div>
 
     <div>
@@ -44,6 +44,7 @@
 </table>
 
 <h4>Your Shopping Cart</h4>
+<h3 id="success-place-order">You successfully place your order !</h3>
 <h5 id="empty-shopping-cart">There is no items in your shopping cart !</h5>
 
 <div id="shopping-cart">
@@ -60,8 +61,10 @@
         </tbody>
     </table>
 
+    <h3 id="error"></h3>
+
     <div id="place-order-div">
-        <button id="place-order">Place order</button>
+        <button id="place-order" onclick="placeOrder()">Place order</button>
     </div>
 </div>
 
